@@ -10,8 +10,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class PlayerController {
+@RequestMapping("/dev")
+/*public class PlayerController {
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -43,5 +43,20 @@ public class PlayerController {
         Player p = playerRepository.findById(id).orElseThrow(()-> new Exception("Something went wrong!"));
         playerRepository.delete(p);
         return ResponseEntity.ok().build();
+    }
+}
+*/
+public class PlayerController {
+    @Autowired
+    private PlayerRepository playerRepository;
+
+    @GetMapping("/players")
+    public List<Player> getAllPlayers() {
+        return playerRepository.findAll();
+    }
+
+    @GetMapping("/players/{id}")
+    public List<Player> getAllPlayers(@PathVariable(value = "id") Long id) {
+        return playerRepository.findAll();
     }
 }

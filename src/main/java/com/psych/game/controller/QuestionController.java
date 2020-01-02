@@ -14,17 +14,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dev")
-public class QuestionController  {
+public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
 
     @GetMapping("/questions")
-    public List<Question> getAllQuestions(){
+    public List<Question> getAllQuestions() {
         return questionRepository.findAll();
     }
 
-    @GetMapping("questions/{id}")
-    public Question getQuestionById(@PathVariable(value="id") Long id) throws Exception {
-        return questionRepository.findById(id).orElseThrow(()-> new Exception("Something went wrong!"));
+    @GetMapping("/questions/{id}")
+    public Question getAllQuestions(@PathVariable(value = "id") Long id) throws Exception {
+        return questionRepository.findById(id).orElseThrow(Exception::new);
     }
 }
