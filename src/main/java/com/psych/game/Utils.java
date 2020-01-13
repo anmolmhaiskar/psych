@@ -12,10 +12,31 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Utils {
+
+    private static List<String> wordList;
+    private static Map<String, Integer> wordIndices;
+
+    static {
+        wordList = new ArrayList<>();
+        wordIndices = new HashMap<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("words.txt"));
+        String word;
+
+        do {
+            word = br.readLine();
+            wordList.add(word);
+            wordIndices.put(word, wordList.size()-1);
+        } while (word != null);
+    }
+    catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<Pair<String,String>> readQAFile(String filename) throws FileNotFoundException {
         BufferedReader br =  new BufferedReader(new FileReader("qa_facts.txt"));
         String question,answer;
@@ -39,4 +60,25 @@ public class Utils {
         }
         return question_answer;
     }
+
+    public static String getSecretCodeFromId(Long id) {
+       StringBuilder code = new StringBuilder();
+        int base = wordList.size();
+        while(id > 0){
+            code.append(wordList.get((int) (id%base)));
+            id/=base;
+        }
+        return code.toString();
+    }
+
+    public static long getGameIdFromSecretCode(String code) {
+        List<String> words = Arrays.asList(code.split(" " ));
+        int base = wordList.size(),gameId=0;
+        for(String word: words){
+             gameId= base + wordIndices.get(word);
+        }
+        return gameId;
+    }
+
+
 }

@@ -55,8 +55,8 @@ public class PlayerController {
         return playerRepository.findAll();
     }
 
-    @GetMapping("/players/{id}")
-    public List<Player> getAllPlayers(@PathVariable(value = "id") Long id) {
-        return playerRepository.findAll();
+    @GetMapping("players/{id}")
+    public Player getPlayerById(@PathVariable(value="id") Long id) throws Exception {
+        return playerRepository.findById(id).orElseThrow(()-> new Exception("Something went wrong!"));
     }
 }
